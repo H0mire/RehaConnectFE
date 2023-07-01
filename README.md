@@ -1,6 +1,6 @@
 # RehaConnectFE
 The Frontend of the RehaConnect Application.
 
-# RehaConnection
+# RehaConnect
 
 An application for acquisition and visualisation of biodata. Pace, Heartrate, etc.
