@@ -30,7 +30,6 @@
                   <span class="h2 font-weight-bold mb-0">99%</span>
                 </div>
                 <div class="col-auto">
-                  <!-- Icon für Lunge einfügen-->
                   <div class="icon icon-shape bg-info text-white rounded-circle shadow">
                     <i class="fa-light fa-lungs"></i>
                   </div>
@@ -87,17 +86,17 @@
               <div class="position-absolute text-left pl-md-4">
                 <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
                 <h2 class="text-white mb-0">Trainingsverlauf</h2>
-                
+              </div>
             </div>
             <div class="col">
               <ul class="nav nav-pills justify-content-end">
-                <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[0];updateOptions()">
+                <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" (click)="data=datasets[0];updateOptions()">
                   <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked===true}" data-toggle="tab" (click)="clicked=true;clicked1=false">
                     <span class="d-none d-md-block">Puls</span>
                     <span class="d-md-none">M</span>
                   </a>
                 </li>
-                <li class="nav-item" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[1];updateOptions()">
+                <li class="nav-item" data-toggle="chart" data-target="#chart-sales" (click)="data=datasets[1];updateOptions()">
                   <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked1===true}" data-toggle="tab" (click)="clicked=false;clicked1=true">
                     <span class="d-none d-md-block">Geschwindigkeit</span>
                     <span class="d-md-none">W</span>
@@ -116,132 +115,129 @@
         </div>
       </div>
     </div>
-   
   </div>
   <div class="row mt-5">
-    <div class="col-xl-8 mb-5 mb-xl-0">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <div class="row align-items-center">
-            <div class="col">
-              <h3 class="mb-0">Trainingseinheiten</h3>
+    <div class="col-xl-8 mb-5 mx-auto mb-xl-0">
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">Trainingseinheiten</h3>
+              </div>
             </div>
           </div>
+          <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Datum</th>
+                  <th scope="col">Start</th>
+                  <th scope="col">Ende</th>
+                  <th scope="col">Dauer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">
+                    05.07.2023
+                  </th>
+                  <td>
+                    7:14
+                  </td>
+                  <td>
+                    7:44
+                  </td>
+                  <td>
+                    0:30
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    04.07.2023
+                  </th>
+                  <td>
+                    14:02
+                  </td>
+                  <td>
+                    15:13
+                  </td>
+                  <td>
+                    01:11
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    29.06.2023
+                  </th>
+                  <td>
+                    20:22
+                  </td>
+                  <td>
+                    21:28
+                  </td>
+                  <td>
+                    01:06
+                  </td>
+                </tr><tr>
+                  <th scope="row">
+                    28.06.2023
+                  </th>
+                  <td>
+                  09:34
+                  </td>
+                  <td>
+                    09:59
+                  </td>
+                  <td>
+                    00:25
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    26.06.2023
+                  </th>
+                  <td>
+                    06:23
+                  </td>
+                  <td>
+                    08:11
+                  </td>
+                  <td>
+                    01:48
+                  </td>
+                </tr>
+              <!--- <tr>
+                  <th scope="row">
+                    /argon/tables.html
+                  </th>
+                  <td>
+                    2,050
+                  </td>
+                  <td>
+                    147
+                  </td>
+                  <td>
+                    <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    /argon/profile.html
+                  </th>
+                  <td>
+                    1,795
+                  </td>
+                  <td>
+                    190
+                  </td>
+                  <td>
+                    <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                  </td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="table-responsive">
-          <!-- Projects table -->
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Datum</th>
-                <th scope="col">Start</th>
-                <th scope="col">Ende</th>
-                <th scope="col">Dauer</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">
-                  05.07.2023
-                </th>
-                <td>
-                  7:14
-                </td>
-                <td>
-                  7:44
-                </td>
-                <td>
-                  0:30
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  04.07.2023
-                </th>
-                <td>
-                  14:02
-                </td>
-                <td>
-                  15:13
-                </td>
-                <td>
-                  01:11
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  29.06.2023
-                </th>
-                <td>
-                  20:22
-                </td>
-                <td>
-                  21:28
-                </td>
-                <td>
-                  01:06
-                </td>
-              </tr><tr>
-                <th scope="row">
-                  28.06.2023
-                </th>
-                <td>
-                09:34
-                </td>
-                <td>
-                  09:59
-                </td>
-                <td>
-                  00:25
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  26.06.2023
-                </th>
-                <td>
-                  06:23
-                </td>
-                <td>
-                  08:11
-                </td>
-                <td>
-                  01:48
-                </td>
-              </tr>
-             <!--- <tr>
-                <th scope="row">
-                  /argon/tables.html
-                </th>
-                <td>
-                  2,050
-                </td>
-                <td>
-                  147
-                </td>
-                <td>
-                  <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/profile.html
-                </th>
-                <td>
-                  1,795
-                </td>
-                <td>
-                  190
-                </td>
-                <td>
-                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
-                </td>
-              </tr> -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    
   </div>
 </div>
