@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap, shareReplay } from 'rxjs/operators';
+import { Observable, ObservableInput, throwError } from 'rxjs';
+import { tap, shareReplay, catchError } from 'rxjs/operators';
 import * as moment from 'moment';
 import { User } from './user';
 
@@ -12,21 +12,20 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<User> {
-    return this.http.post<User>('/auth/login', { username, password }).pipe(
-      tap(res => this.setSession(res)),
-      shareReplay()
-    );
+    return this.http.post<User>('http://127.0.0.1:3001/auth/login', { username, password }).pipe(
+		tap(authResult => this.setSession(authResult))
+	  );
   }
 
   register(username: string, email: string, password: string, invitationCode: string): Observable<User> {
-    return this.http.post<User>('/auth/login', { username, email, password, invitationCode }).pipe(
-      tap(res => this.setSession(res)),
-      shareReplay()
-    );
+    return this.http.post<User>('http://127.0.0.1:3001/auth/register', { username, email, password, invitationCode }).pipe(
+		tap(authResult => this.setSession(authResult))
+	  );
   }
   
 
   private setSession(authResult: any): void {
+	alert(authResult);
     const expiresAt = moment().add(authResult.expiresIn, 'second');
 
     localStorage.setItem('id_token', authResult.token);

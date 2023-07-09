@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   username: string;
   password: string;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router ) {}
 
   ngOnInit(): void {
     document.getElementById('togglePassword').addEventListener('click', () => this.togglePasswordVisibility());
@@ -37,8 +38,19 @@ export class LoginComponent implements OnInit, OnDestroy {
       togglePassword.innerHTML = '<i class="fas fa-eye"></i>'; // Ändere das Icon, wenn das Passwort versteckt ist
     }
   }
+  test():void{
+	alert("test");
+  }
 
-  login(username, password): void {
-    this.authService.login(username, password);
+  login(username: string, password:string ): void {
+    this.authService.login(username, password).subscribe({
+		next: (v) => {
+			console.log(v);
+			this.router.navigate(['/']);
+		},
+		error: (e) => console.error(e),
+		complete: () => console.info('complete') 
+	});
+
   }
 }

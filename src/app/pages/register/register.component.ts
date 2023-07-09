@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ export class RegisterComponent implements OnInit {
   confirmedPassword: string;
   invitationCode: string;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     document.getElementById("togglePassword").addEventListener("click", () => this.togglePasswordVisibility());
@@ -25,17 +26,16 @@ export class RegisterComponent implements OnInit {
     var username = (document.getElementById("username") as HTMLInputElement).value;
     var email = (document.getElementById("email") as HTMLInputElement).value;
     var password = (document.getElementById("passwordInput") as HTMLInputElement).value;
-    var confirmedPassword = (document.getElementById("confirmedPasswordInput") as HTMLInputElement).value;
     var invitationCode = (document.getElementById("invitationCode") as HTMLInputElement).value;
     var agreeCheckbox = document.getElementById("customCheckRegister") as HTMLInputElement;
     var createAccountBtn = document.getElementById("createAccountBtn") as HTMLButtonElement;
   
     // Überprüfe, ob alle Felder ausgefüllt sind und das Kontrollkästchen angekreuzt ist
-    var isFormValid = username !== "" && email !== "" && password !== "" && confirmedPassword !== "" && invitationCode !== "" && agreeCheckbox.checked;
+    this.isFormValid = username !== "" && email !== "" && password !== ""  && invitationCode !== "" && agreeCheckbox.checked;
   
-    createAccountBtn.disabled = !isFormValid;
-    console.log("CHeck Form valid: "+isFormValid);
-    if (isFormValid) {
+    createAccountBtn.disabled = !this.isFormValid;
+    console.log("CHeck Form valid: "+this.isFormValid);
+    if (this.isFormValid) {
       console.log("in disabled");
       createAccountBtn.classList.remove("disabled");
     } else {
@@ -49,7 +49,6 @@ export class RegisterComponent implements OnInit {
     document.getElementById("username").addEventListener("input", () => this.validateForm());
     document.getElementById("email").addEventListener("input", () => this.validateForm());
     document.getElementById("passwordInput").addEventListener("input", () => this.validateForm());
-    document.getElementById("confirmedPasswordInput").addEventListener("input", () => this.validateForm());
     document.getElementById("invitationCode").addEventListener("input", () => this.validateForm());
     document.getElementById("customCheckRegister").addEventListener("change", () => this.validateForm());
   }
@@ -71,7 +70,14 @@ export class RegisterComponent implements OnInit {
 
   register(username, email, password, invitationCode) : void{
     if (this.isFormValid){
-      this.authService.register(username, email, password, invitationCode);
+    	this.authService.register(username, email, password, invitationCode).subscribe({
+			next: (v) => {
+				console.log(v);
+				this.router.navigate(['/']);
+			},
+			error: (e) => console.error(e),
+			complete: () => console.info('complete') 
+		});
     }
   }
 }
