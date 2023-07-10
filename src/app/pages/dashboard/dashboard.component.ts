@@ -21,8 +21,8 @@ export class DashboardComponent implements OnInit {
 	chartOptions: any;
 	//Das angezeigte Training wird auf 0 gesetzt, damit die Felder überhaupt angezeigt werden
 	public selectedTraining = {
-		averagePulse: 0,
-		spo2: 0,
+		avgPulse: 0,
+		maxPulse: 0,
 		sumSteps: 0,
 		avgSpeed: 0,
 		_id: 0
@@ -37,7 +37,8 @@ export class DashboardComponent implements OnInit {
 		//Die Felder werden beim Laden des Dashboards mit dem aktuellsten Training besetzt
 		this.getData().then(() => {
 			if (this.trainings.length > 0) {
-				
+					
+				//Chart-Options des Graphen
 				this.chartOptions = {
 					responsive: true,
 					maintainAspectRatio: false,
@@ -160,7 +161,7 @@ export class DashboardComponent implements OnInit {
 
 	private async getData() {
 		const trainings = await this.getTrainingList();
-		this.selectedTraining= trainings[0];
+		this.selectedTraining = trainings[0];
 		const pulseData = await this.getPulseData();
 		const speedData = await this.getSpeedData();
 
@@ -169,6 +170,12 @@ export class DashboardComponent implements OnInit {
 		this.datasets = [pulseData, speedData];
 		this.data = this.datasets[0];
 
+	}
+	private async getHealthData(){
+		const pulseData = await this.getPulseData();
+		const speedData = await this.getSpeedData();
+		this.datasets = [pulseData, speedData];
+		this.data = this.datasets[0];
 	}
 
 	//Update-Methode für den Chart beim Wechsel zwischen Puls und Geschwindigkeit
@@ -188,7 +195,7 @@ export class DashboardComponent implements OnInit {
 		} else if (this.clicked === 'geschwindigkeit') {
 			const speedData = this.datasets[1].map(item => item.value);
 
-			this.salesChart.options.scales.yAxes[0].scaleLabel.labelString = 'km/h';
+			this.salesChart.options.scales.yAxes[0].scaleLabel.labelString = 'Schritte/Minute';
 			this.salesChart.options.scales.yAxes[0].ticks.stepSize = 1;
 			this.salesChart.options.scales.yAxes[0].ticks.callback = (value) => value;
 
@@ -203,9 +210,14 @@ export class DashboardComponent implements OnInit {
 	//TableClick-Methode zum Auswählen der Trainings in der Tabelle unterhalb
 
 	TableClick(event: any, training: any) {
+		
 		this.selectedTraining = training;
-		console.log("TableClick wurde aufgerufen");
-		console.log(training)
+		this.getHealthData().then(() => {
+			console.log("TableClick wurde aufgerufen");
+			console.log(training)
+			this.displayInfo();
+		});
+
 
 	}
 

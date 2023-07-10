@@ -8,8 +8,8 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0" style="font-size: 18px; font-weight:bold">Puls</h5>
-                  <span class="h2 font-weight-bold mb-0">{{ selectedTraining.averagePulse }} Schläge/Min</span>
+                  <h5 class="card-title text-uppercase text-muted mb-0" style="font-size: 18px; font-weight:bold">Avg. Puls</h5>
+                  <span class="h2 font-weight-bold mb-0">{{ selectedTraining.avgPulse }} Schläge/Min</span>
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
@@ -26,11 +26,11 @@
               <div class="row">
                 <div class="col">
                   <h5 class="card-title text-uppercase text-muted mb-0" style="font-size: 18px; font-weight:bold">Max. Puls</h5>
-                  <span class="h2 font-weight-bold mb-0">{{selectedTraining.spo2 }} Schläge/Min</span>
+                  <span class="h2 font-weight-bold mb-0">{{selectedTraining.maxPulse }} Schläge/Min</span>
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                    <i class="fas fa-lungs"></i>
+                    <i class="fas fa-heart"></i>
                   </div>
                 </div>
               </div>
@@ -60,7 +60,7 @@
               <div class="row">
                 <div class="col">
                   <h5 class="card-title text-uppercase text-muted mb-0" style="font-size: 18px; font-weight:bold">⌀-Geschwindigkeit</h5>
-                  <span class="h2 font-weight-bold mb-0">{{selectedTraining.avgSpeed }} km/h</span>
+                  <span class="h2 font-weight-bold mb-0">{{selectedTraining.avgSpeed }} Schritte/Minute</span>
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-info text-white rounded-circle shadow">
