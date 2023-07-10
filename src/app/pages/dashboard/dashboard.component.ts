@@ -15,94 +15,91 @@ export class DashboardComponent implements OnInit {
 
 	public datasets: any;
 	public data: any;
-	public trainings:any;
+	public trainings: any;
 	public salesChart;
 	public clicked: string = 'puls';
 	chartOptions: any;
-  //Das angezeigte Training wird auf 0 gesetzt, damit die Felder überhaupt angezeigt werden
-  public selectedTraining= {
-    averagePulse: 0,
-    spo2: 0,
-    sumSteps: 0,
-    avgSpeed: 0
-  };
-  
+	//Das angezeigte Training wird auf 0 gesetzt, damit die Felder überhaupt angezeigt werden
+	public selectedTraining = {
+		averagePulse: 0,
+		spo2: 0,
+		sumSteps: 0,
+		avgSpeed: 0,
+		_id: 0
+	};
+
 
 	constructor(private http: HttpClient) { }
 
 
 	ngOnInit() {
-    
-//Die Felder werden beim Laden des Dashboards mit dem aktuellsten Training besetzt
-    this.getData().then(() => {
-      if (this.trainings.length > 0) {
-        this.selectedTraining = {
-          averagePulse: this.trainings[0].averagePulse,
-          spo2: this.trainings[0].spo2,
-          sumSteps: this.trainings[0].sumSteps,
-          avgSpeed: this.trainings[0].avgSpeed
-        };
-      }
-    });
 
-	
-
-    //Chart-Options des Graphen
-
-		this.chartOptions = {
-			responsive: true,
-			maintainAspectRatio: false,
-			legend: {
-				display: false
-			},
-			tooltips: {
-				enabled: true,
-				mode: 'index',
-				intersect: false,
-				borderWidth: 1,
-				borderColor: 'rgba(0, 0, 0, 0.12)',
-				backgroundColor: 'white',
-				titleFontColor: 'rgba(0, 0, 0, 0.6)',
-				bodyFontColor: 'rgba(0, 0, 0, 0.6)',
-				footerFontColor: 'rgba(0, 0, 0, 0.6)'
-			},
-			scales: {
-				xAxes: [{
-					type: 'linear',
-					position: 'bottom',
-					display: true,
-					gridLines: {
+		//Die Felder werden beim Laden des Dashboards mit dem aktuellsten Training besetzt
+		this.getData().then(() => {
+			if (this.trainings.length > 0) {
+				
+				this.chartOptions = {
+					responsive: true,
+					maintainAspectRatio: false,
+					legend: {
 						display: false
 					},
-					scaleLabel: {
-						display: true,
-						labelString: 'Trainingszeit in Sekunden'
-					}
-				}],
-				yAxes: [{
-					display: true,
-					gridLines: {
-						display: true,
-						color: 'rgba(0, 0, 0, 0.1)'
+					tooltips: {
+						enabled: true,
+						mode: 'index',
+						intersect: false,
+						borderWidth: 1,
+						borderColor: 'rgba(0, 0, 0, 0.12)',
+						backgroundColor: 'white',
+						titleFontColor: 'rgba(0, 0, 0, 0.6)',
+						bodyFontColor: 'rgba(0, 0, 0, 0.6)',
+						footerFontColor: 'rgba(0, 0, 0, 0.6)'
 					},
-					scaleLabel: {
-						display: true,
-						labelString: 'Schläge/Min'
-					},
-					ticks: {
-						beginAtZero: true,
-						stepSize: 10 
+					scales: {
+						xAxes: [{
+							type: 'linear',
+							position: 'bottom',
+							display: true,
+							gridLines: {
+								display: false
+							},
+							scaleLabel: {
+								display: true,
+								labelString: 'Trainingszeit in Sekunden'
+							}
+						}],
+						yAxes: [{
+							display: true,
+							gridLines: {
+								display: true,
+								color: 'rgba(0, 0, 0, 0.1)'
+							},
+							scaleLabel: {
+								display: true,
+								labelString: 'Schläge/Min'
+							},
+							ticks: {
+								beginAtZero: true,
+								stepSize: 10
+							}
+						}]
 					}
-				}]
+				};
+				this.displayInfo();
+
 			}
-		};
-		this.displayInfo();
+		});
+
+
+
+		//Chart-Options des Graphen
+
 
 
 	}
 	private async displayInfo() {
-		await this.getData();
-
+		console.log(this.datasets);
+		console.log(this.data);
 		this.salesChart = new Chart('chart-sales', {
 			type: 'line',
 			options: { ...this.chartOptions },
@@ -121,40 +118,40 @@ export class DashboardComponent implements OnInit {
 		});
 	}
 
-  //Erhalten der Trainingsliste aus dem Backend
+	//Erhalten der Trainingsliste aus dem Backend
 	getTrainingList(): Promise<any> {
 		return new Promise((resolve, reject) => {
 			this.http.get<Training[]>('http://127.0.0.1:3001/app/trainings/').subscribe({
 				next: (v) => {
 					resolve(v);
 				},
-				error: (e) => {console.log(e);reject(e)},
+				error: (e) => { console.log(e); reject(e) },
 				complete: () => console.info('complete')
 			});
 		});
 	}
 
-  //Erhalten der Pulsdaten aus dem Backend
+	//Erhalten der Pulsdaten aus dem Backend
 	getPulseData(): Promise<any> {
 		return new Promise((resolve, reject) => {
-			this.http.get<PulseData>('http://127.0.0.1:3001/app/trainings/pulse/1').subscribe({
+			this.http.get<PulseData>('http://127.0.0.1:3001/app/trainings/pulse/' + this.selectedTraining._id).subscribe({
 				next: (v) => {
 					resolve(v);
 				},
-				error: (e) => {console.log(e);reject(e)},
+				error: (e) => { console.log(e); reject(e) },
 				complete: () => console.info('complete')
 			});
 		});
 	}
 
-  //Erhalten der Geschwindigkeitsdaten aus dem Backend
+	//Erhalten der Geschwindigkeitsdaten aus dem Backend
 	getSpeedData(): Promise<any> {
 		return new Promise((resolve, reject) => {
-			this.http.get<PulseData>('http://127.0.0.1:3001/app/trainings/speed/1').subscribe({
+			this.http.get<PulseData>('http://127.0.0.1:3001/app/trainings/speed/' + this.selectedTraining._id).subscribe({
 				next: (v) => {
 					resolve(v);
 				},
-				error: (e) => {console.log(e);reject(e)},
+				error: (e) => { console.log(e); reject(e) },
 				complete: () => console.info('complete')
 			});
 		});
@@ -163,18 +160,21 @@ export class DashboardComponent implements OnInit {
 
 	private async getData() {
 		const trainings = await this.getTrainingList();
+		this.selectedTraining= trainings[0];
 		const pulseData = await this.getPulseData();
 		const speedData = await this.getSpeedData();
 
 		this.trainings = trainings;
-		console.log(trainings);
+		console.log(pulseData);
 		this.datasets = [pulseData, speedData];
 		this.data = this.datasets[0];
-    
+
 	}
 
-  //Update-Methode für den Chart beim Wechsel zwischen Puls und Geschwindigkeit
+	//Update-Methode für den Chart beim Wechsel zwischen Puls und Geschwindigkeit
 	public updateOptions() {
+		console.log(this.data);
+		console.log(this.datasets);
 		if (this.clicked === 'puls') {
 			const averagePulses = this.datasets[0].map(item => item.pulse);
 
@@ -200,13 +200,13 @@ export class DashboardComponent implements OnInit {
 		this.salesChart.update();
 	}
 
-  //TableClick-Methode zum Auswählen der Trainings in der Tabelle unterhalb
+	//TableClick-Methode zum Auswählen der Trainings in der Tabelle unterhalb
 
-  TableClick(event: any, training: any) {
-    this.selectedTraining = training;
-    console.log("TableClick wurde aufgerufen");
-    console.log(training)
+	TableClick(event: any, training: any) {
+		this.selectedTraining = training;
+		console.log("TableClick wurde aufgerufen");
+		console.log(training)
 
-  }
+	}
 
 }
