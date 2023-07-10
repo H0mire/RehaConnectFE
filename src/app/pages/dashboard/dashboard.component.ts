@@ -45,6 +45,8 @@ export class DashboardComponent implements OnInit {
       }
     });
 
+	
+
     //Chart-Options des Graphen
 
 		this.chartOptions = {
@@ -119,7 +121,7 @@ export class DashboardComponent implements OnInit {
 		});
 	}
 
-  //Erhaalten der Trainingsliste aus dem Backend
+  //Erhalten der Trainingsliste aus dem Backend
 	getTrainingList(): Promise<any> {
 		return new Promise((resolve, reject) => {
 			this.http.get<Training[]>('http://127.0.0.1:3001/app/trainings/').subscribe({

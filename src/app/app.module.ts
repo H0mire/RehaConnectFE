@@ -1,3 +1,4 @@
+//Auflistung der verwendeten Module und Komponenten
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';

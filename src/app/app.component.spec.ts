@@ -1,6 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
+//AppComponent wird als zu testende Komponente festgelegt
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -10,18 +11,21 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
+  //Erstellung der Komponente und Überprüfung, ob Komponente erstellt wurde
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
 
+  //ERstellung der Komponente und Überprüfung, ob Titel der Komponente übereinstimmt
   it(`should have as title 'argon-dashboard-angular'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('argon-dashboard-angular');
   });
 
+  //Erstellung und Initialisierungsprozess der Komponente und Überprüfung, ob der gerenderte Text den erwarteten Wert hat
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
