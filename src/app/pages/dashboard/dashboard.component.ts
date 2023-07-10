@@ -111,7 +111,7 @@ export class DashboardComponent implements OnInit {
 						backgroundColor: 'rgba(255, 99, 132, 0.2)',
 						borderColor: 'rgba(255, 99, 132, 1)',
 						borderWidth: 1,
-						data: this.datasets[0].map(item => ({ x: item.time, y: item.pulse }))
+						data: this.datasets[0].map(item => ({ x: item.time, y: item.value }))
 					}
 				]
 			}
@@ -176,7 +176,7 @@ export class DashboardComponent implements OnInit {
 		console.log(this.data);
 		console.log(this.datasets);
 		if (this.clicked === 'puls') {
-			const averagePulses = this.datasets[0].map(item => item.pulse);
+			const averagePulses = this.datasets[0].map(item => item.value);
 
 			this.salesChart.options.scales.yAxes[0].scaleLabel.labelString = 'Schläge/Min';
 			this.salesChart.options.scales.yAxes[0].ticks.stepSize = 10;
@@ -186,7 +186,7 @@ export class DashboardComponent implements OnInit {
 			this.salesChart.data.labels = averagePulses.map((value, index) => ({ x: index, y: value }));
 			this.salesChart.type = 'line';
 		} else if (this.clicked === 'geschwindigkeit') {
-			const speedData = this.datasets[1].map(item => item.speed);
+			const speedData = this.datasets[1].map(item => item.value);
 
 			this.salesChart.options.scales.yAxes[0].scaleLabel.labelString = 'km/h';
 			this.salesChart.options.scales.yAxes[0].ticks.stepSize = 1;
