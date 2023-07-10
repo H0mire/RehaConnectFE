@@ -19,11 +19,33 @@ export class DashboardComponent implements OnInit {
 	public salesChart;
 	public clicked: string = 'puls';
 	chartOptions: any;
+  //Das angezeigte Training wird auf 0 gesetzt, damit die Felder überhaupt angezeigt werden
+  public selectedTraining= {
+    averagePulse: 0,
+    spo2: 0,
+    sumSteps: 0,
+    avgSpeed: 0
+  };
+  
 
 	constructor(private http: HttpClient) { }
 
 
 	ngOnInit() {
+    
+//Die Felder werden beim Laden des Dashboards mit dem aktuellsten Training besetzt
+    this.getData().then(() => {
+      if (this.trainings.length > 0) {
+        this.selectedTraining = {
+          averagePulse: this.trainings[0].averagePulse,
+          spo2: this.trainings[0].spo2,
+          sumSteps: this.trainings[0].sumSteps,
+          avgSpeed: this.trainings[0].avgSpeed
+        };
+      }
+    });
+
+    //Chart-Options des Graphen
 
 		this.chartOptions = {
 			responsive: true,
@@ -67,7 +89,7 @@ export class DashboardComponent implements OnInit {
 					},
 					ticks: {
 						beginAtZero: true,
-						stepSize: 10 // Ändern Sie den Schritt der Skala nach Bedarf
+						stepSize: 10 
 					}
 				}]
 			}
@@ -96,6 +118,8 @@ export class DashboardComponent implements OnInit {
 			}
 		});
 	}
+
+  //Erhaalten der Trainingsliste aus dem Backend
 	getTrainingList(): Promise<any> {
 		return new Promise((resolve, reject) => {
 			this.http.get<Training[]>('http://127.0.0.1:3001/app/trainings/').subscribe({
@@ -108,6 +132,7 @@ export class DashboardComponent implements OnInit {
 		});
 	}
 
+  //Erhalten der Pulsdaten aus dem Backend
 	getPulseData(): Promise<any> {
 		return new Promise((resolve, reject) => {
 			this.http.get<PulseData>('http://127.0.0.1:3001/app/trainings/pulse/1').subscribe({
@@ -120,6 +145,7 @@ export class DashboardComponent implements OnInit {
 		});
 	}
 
+  //Erhalten der Geschwindigkeitsdaten aus dem Backend
 	getSpeedData(): Promise<any> {
 		return new Promise((resolve, reject) => {
 			this.http.get<PulseData>('http://127.0.0.1:3001/app/trainings/speed/1').subscribe({
@@ -142,8 +168,10 @@ export class DashboardComponent implements OnInit {
 		console.log(trainings);
 		this.datasets = [pulseData, speedData];
 		this.data = this.datasets[0];
+    
 	}
 
+  //Update-Methode für den Chart beim Wechsel zwischen Puls und Geschwindigkeit
 	public updateOptions() {
 		if (this.clicked === 'puls') {
 			const averagePulses = this.datasets[0].map(item => item.pulse);
@@ -170,17 +198,13 @@ export class DashboardComponent implements OnInit {
 		this.salesChart.update();
 	}
 
-	TableClick(event: Event) {
-		const target = event.target as HTMLElement;
-		const rowData = target.closest('tr').textContent;
-		console.log('Row clicked:');
-	}
+  //TableClick-Methode zum Auswählen der Trainings in der Tabelle unterhalb
 
+  TableClick(event: any, training: any) {
+    this.selectedTraining = training;
+    console.log("TableClick wurde aufgerufen");
+    console.log(training)
+
+  }
 
 }
-
-
-
-
-
-

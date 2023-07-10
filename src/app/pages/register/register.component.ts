@@ -53,6 +53,7 @@ export class RegisterComponent implements OnInit {
     document.getElementById("customCheckRegister").addEventListener("change", () => this.validateForm());
   }
 
+  //Methode zum Sichbarmachen des Passworts
   togglePasswordVisibility() {
     
     const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
@@ -68,6 +69,7 @@ export class RegisterComponent implements OnInit {
 
   }
 
+  //Methode für die Registrierung
   register(username, email, password, invitationCode) : void{
     if (this.isFormValid){
     	this.authService.register(username, email, password, invitationCode).subscribe({

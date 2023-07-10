@@ -11,9 +11,8 @@
     </svg>
   </div>
 </div>
-<!-- Page content -->
 <div class="container mt--8 pb-5">
-  <!-- Table -->
+  <!-- Registrierung -->
   <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8">
       <div class="card bg-secondary shadow border-0">
@@ -21,6 +20,7 @@
           <div class="text-center text-muted mb-4">
             <h2>Registrierung</h2>
           </div>
+          <!-- Eingabefelder für die verschiedenen Parameter-->
           <form role="form">
             <div class="form-group">
               <div class="input-group input-group-alternative mb-3">
@@ -64,12 +64,12 @@
                 <div class="custom-control custom-control-alternative custom-checkbox">
                   <input class="custom-control-input" id="customCheckRegister" type="checkbox">
                   <label class="custom-control-label" for="customCheckRegister">
-                    <!--in dem href muss noch die AGB Seite eingefügt werden-->
                     <span class="text-muted">Ich stimme den <a href="" target="_blank">AGBs</a> zu</span>
                   </label>
                 </div>
               </div>
             </div>
+            <!-- Button, der die register-Funktion aufruft-->
             <div class="text-center">
               <button id="createAccountBtn" type="button" class="btn btn-primary mt-4" [disabled]="!isFormValid" [ngClass]="{'disabled': !isFormValid}" (click)="register(username, email, password, invitationCode)">Account erstellen</button>
             </div>

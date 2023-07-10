@@ -13,6 +13,7 @@ export class Patients implements OnInit {
   ngOnInit() {
   }
   
+  //Methode für das Klicken auf den Patienten
   TableClick(event: Event) {
     const target = event.target as HTMLElement;
     const rowData = target.closest('tr').textContent;

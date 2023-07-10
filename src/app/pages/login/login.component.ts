@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Hier kannst du Aufgaben durchführen, wenn die Komponente zerstört wird
   }
 
   // Funktion zum Ändern der Sichtbarkeit des Passworts
@@ -32,16 +31,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     if (passwordInput.type === 'password') {
       passwordInput.type = 'text';
-      togglePassword.innerHTML = '<i class="fas fa-eye-slash"></i>'; // Ändere das Icon, wenn das Passwort sichtbar ist
+      togglePassword.innerHTML = '<i class="fas fa-eye-slash"></i>';
     } else {
       passwordInput.type = 'password';
-      togglePassword.innerHTML = '<i class="fas fa-eye"></i>'; // Ändere das Icon, wenn das Passwort versteckt ist
+      togglePassword.innerHTML = '<i class="fas fa-eye"></i>';
     }
   }
   test():void{
 	alert("test");
   }
 
+  //Login-Funktion
   login(username: string, password:string ): void {
     this.authService.login(username, password).subscribe({
 		next: (v) => {

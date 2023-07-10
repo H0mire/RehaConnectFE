@@ -13,6 +13,7 @@ export class UserProfileComponent implements OnInit {
     document.getElementById("togglePassword").addEventListener("click", () => this.togglePasswordVisibility());
   }
 
+  //Methode für die Sichtbarkeit des Passwortes
   togglePasswordVisibility() {
     const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
     const togglePassword = document.getElementById('togglePassword');
