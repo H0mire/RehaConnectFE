@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -34,13 +35,15 @@ export class DashboardComponent implements OnInit {
       },
       scales: {
         xAxes: [{
+          type: 'linear',
+          position: 'bottom',
           display: true,
           gridLines: {
             display: false
           },
           scaleLabel: {
             display: true,
-            labelString: 'Category'
+            labelString: 'Trainingszeit in Sekunden'
           }
         }],
         yAxes: [{
@@ -51,7 +54,7 @@ export class DashboardComponent implements OnInit {
           },
           scaleLabel: {
             display: true,
-            labelString: 'Value'
+            labelString: 'Schläge/Min'
           },
           ticks: {
             beginAtZero: true,
@@ -61,62 +64,83 @@ export class DashboardComponent implements OnInit {
       }
     };
 
-    const averagePulses = [80, 85, 90, 95, 100, 105];
-    const speedData = [10, 12, 11, 13, 14, 15];
+    const pulseData = [
+      { time: 0, pulse: 80 },
+      { time: 1, pulse: 88 },
+      { time: 2, pulse: 96 },
+      { time: 3, pulse: 104 },
+      { time: 4, pulse: 112 },
+      { time: 5, pulse: 120 }
+    ];
+
+    const speedData = [
+      { time: 0, speed: 15 },
+      { time: 1, speed: 14 },
+      { time: 2, speed: 16 },
+      { time: 3, speed: 18 },
+      { time: 4, speed: 16 },
+      { time: 5, speed: 12 }
+    ];
+    
+    this.datasets = [pulseData, speedData];
+    this.data = this.datasets[0];
 
     this.salesChart = new Chart('chart-sales', {
-      type: 'bar', // Verwenden Sie 'bar' für das vertikale Balkendiagramm
-      options: {
-        ...chartOptions,
-        scales: {
-          xAxes: [{
-            ...chartOptions.scales.xAxes[0],
-            ticks: {
-
-            }
-          }],
-          yAxes: [{
-            ...chartOptions.scales.yAxes[0],
-            ticks: {
-              ...chartOptions.scales.yAxes[0].ticks,
-              fontSize: 14,
-              padding: 40 // Ändern Sie den Abstand zwischen den y-Werten nach Bedarf
-            }
-          }]
-        }
-      },
+      type: 'line',
+      options: { ...chartOptions },
       data: {
-        labels: averagePulses.map((_, index) => `Minute ${index + 1}`),
-        datasets: [{
-          label: 'Durchschnittspuls',
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1,
-          data: averagePulses
-        }]
+        labels: this.data.map(item => `Sekunde ${item.time}`),
+        datasets: [
+          {
+            label: 'Wert',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            data: pulseData.map(item => ({ x: item.time, y: item.pulse }))
+          }
+        ]
       }
     });
 
-    this.datasets = [averagePulses, speedData];
-    this.data = this.datasets[0];
   }
 
   public updateOptions() {
     if (this.clicked === 'puls') {
-      const averagePulses = this.datasets[0];
+      const averagePulses = this.datasets[0].map(item => item.pulse);
 
-      this.salesChart.data.labels = averagePulses.map((_, index) => `Minute ${index + 1}`);
-      this.salesChart.data.datasets[0].data = averagePulses;
-      this.salesChart.type = 'bar'; // Verwenden Sie 'bar' für das vertikale Balkendiagramm
+      this.salesChart.options.scales.yAxes[0].scaleLabel.labelString = 'Schläge/Min';
+      this.salesChart.options.scales.yAxes[0].ticks.stepSize = 10;
+      this.salesChart.options.scales.yAxes[0].ticks.callback = (value) => value;
+
+      this.salesChart.data.datasets[0].data = averagePulses.map((value, index) => ({ x: index, y: value }));
+      this.salesChart.data.labels = averagePulses.map((value, index) => ({ x: index, y: value }));
+      this.salesChart.type = 'line';
     } else if (this.clicked === 'geschwindigkeit') {
-      const speedData = this.datasets[1];
+      const speedData = this.datasets[1].map(item => item.speed);
 
-      this.salesChart.data.labels = speedData.map((_, index) => `Messung ${index + 1}`);
-      this.salesChart.data.datasets[0].data = speedData;
+      this.salesChart.options.scales.yAxes[0].scaleLabel.labelString = 'km/h';
+      this.salesChart.options.scales.yAxes[0].ticks.stepSize = 1;
+      this.salesChart.options.scales.yAxes[0].ticks.callback = (value) => value;
+
+      this.salesChart.data.datasets[0].data = speedData.map((value, index) => ({ x: index, y: value }));
+      this.salesChart.data.labels = speedData.map((value, index) => ({ x: index, y: value }));
       this.salesChart.type = 'line';
     }
 
     this.salesChart.update();
   }
 
+  TableClick(event: Event) {
+    const target = event.target as HTMLElement;
+    const rowData = target.closest('tr').textContent;
+    console.log('Row clicked:');
+  }
+
+
 }
+
+
+
+
+
+

@@ -1,3 +1,4 @@
+//Importe aus den Libraries und Frameworks
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
@@ -18,8 +19,10 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    //Filtert die Überschriften aus der Sidebar
     this.listTitles = ROUTES.filter(listTitle => listTitle);
   }
+  //Methode zum Abrufen der aktuellen URL
   getTitle(){
     var titlee = this.location.prepareExternalUrl(this.location.path());
     if(titlee.charAt(0) === '#'){
@@ -34,6 +37,7 @@ export class NavbarComponent implements OnInit {
     return 'Dashboard';
   }
   
+  //Aufruf der Methode zum Logout des AuthService
   logout():void{
 	this.authService.logout();
   }

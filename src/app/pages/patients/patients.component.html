@@ -1,0 +1,100 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+
+  <style>
+    .table tr:hover {
+      background-color: #f2f2f2; /* Ändern Sie die gewünschte Hintergrundfarbe */
+    }
+  </style>
+  
+  <div class="row mt-5">
+    <div class="col-xl-8 mb-5 mx-auto mb-xl-0">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">Patientenliste</h3>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <!-- Projects table -->
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Nachname</th>
+                <th scope="col">Vorname</th>
+                <th scope="col">Geburtsdatum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr (click)="TableClick($event)" style="cursor: pointer;">
+                <th scope="row">
+                  Duck
+                </th>
+                <td>
+                  Donald
+                </td>
+                <td>
+                  01.01.1999
+                </td>
+              </tr>
+              <tr (click)="TableClick($event)" style="cursor: pointer;">
+                <th scope="row">
+                  Duck
+                </th>
+                <td>
+                  Daisy
+                </td>
+                <td>
+                  02.01.1999
+                </td>
+              </tr>
+              <tr (click)="TableClick($event)" style="cursor: pointer;">
+                <th scope="row">
+                  Duck
+                </th>
+                <td>
+                  Dagobert
+                </td>
+                <td>
+                  03.01.1999
+                </td>
+              </tr>
+              <tr (click)="TableClick($event)" style="cursor: pointer;">
+                <th scope="row">
+                  Duck
+                </th>
+                <td>
+                  Tick
+                </td>
+                <td>
+                  04.01.1999
+                </td>
+              </tr>
+              <tr (click)="TableClick($event)" style="cursor: pointer;">
+                <th scope="row">
+                  Duck
+                </th>
+                <td>
+                  Trick
+                </td>
+                <td>
+                  06.01.1999
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

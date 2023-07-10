@@ -1,3 +1,4 @@
+//Impoprte aus den Libraries und Frameworks
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -7,12 +8,11 @@ declare interface RouteInfo {
     icon: string;
     class: string;
 }
+//Menüs, die in der Sidebar angezeigt werden um zu navigieren
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },
-    { path: '/icons', title: 'Patienten',  icon:'ni-planet ambulance', class: '' },
-    //{ path: '/maps', title: 'Maps',  icon:'ni-pin-3 text-orange', class: '' },
+    { path: '/patients', title: 'Patienten',  icon:'ni-planet ambulance', class: '' },
     { path: '/user-profile', title: 'Profile',  icon:'ni-single-02 text-yellow', class: '' },
-    //{ path: '/tables', title: 'Tables',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/login', title: 'Login',  icon:'ni-key-25 text-info', class: '' },
     { path: '/register', title: 'Register',  icon:'ni-circle-08 text-pink', class: '' }
 ];
