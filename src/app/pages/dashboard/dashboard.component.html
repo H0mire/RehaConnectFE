@@ -9,6 +9,7 @@
               <div class="row">
                 <div class="col">
                   <h5 class="card-title text-uppercase text-muted mb-0" style="font-size: 18px; font-weight:bold">Avg. Puls</h5>
+                  <!-- Importieren der Daten der jeweiligen selectedTrainings in die Felder-->
                   <span class="h2 font-weight-bold mb-0">{{ selectedTraining.avgPulse }} Schläge/Min</span>
                 </div>
                 <div class="col-auto">
@@ -137,6 +138,7 @@
             </tr>
           </thead>
           <tbody>
+            <!-- KlickEvent für die Tabelle-->
             <tr *ngFor="let training of trainings" (click)="TableClick($event,training)" style="cursor: pointer;">
               <th scope="row">
                 {{ training.date | date:'dd.MM.yy'  }}
