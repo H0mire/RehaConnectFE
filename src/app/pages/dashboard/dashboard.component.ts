@@ -90,14 +90,9 @@ export class DashboardComponent implements OnInit {
 
 			}
 		});
-
-
-
-		//Chart-Options des Graphen
-
-
-
 	}
+
+	//Initialisieren des Charts
 	private async displayInfo() {
 		console.log(this.datasets);
 		console.log(this.data);
@@ -159,6 +154,7 @@ export class DashboardComponent implements OnInit {
 	}
 
 
+	//Laden der notwendigen Daten für das Dashboard aus dem Backend
 	private async getData() {
 		const trainings = await this.getTrainingList();
 		this.selectedTraining = trainings[0];
@@ -171,6 +167,8 @@ export class DashboardComponent implements OnInit {
 		this.data = this.datasets[0];
 
 	}
+
+	//Laden der notwendigen Daten für die Charts aus dem Backend
 	private async getHealthData(){
 		const pulseData = await this.getPulseData();
 		const speedData = await this.getSpeedData();
